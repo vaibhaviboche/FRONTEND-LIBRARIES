@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Currency Converter</title>
+
+  <!-- React + Babel CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.development.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.development.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.26.5/babel.min.js"></script>
+
+  <!-- Inline CSS -->
+  <style>
+    body {
+      background-color: lightblue;
+    }
+    #container {
+      background-color: Lightgrey;
+      max-width: 500px;
+      margin: 10px auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      text-align: center;
+      border: 2px solid Lightgrey;
+      border-radius: 10px;
+      padding: 10px;
+    }
+    input {
+      max-width: 50%;
+      margin: 0 auto;
+    }
+    select {
+      margin: 0 auto;
+    }
+    label {
+      margin: 5px 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <!-- Inline React JSX -->
+  <script type="text/babel">
+    const { useState, useMemo } = React;
+
+    function CurrencyConverter() {
+      const [amount, setAmount] = useState(1);
+      const [fromCurr, setFromCurr] = useState("USD");
+      const [toCurr, setToCurr] = useState("USD");
+
+      const goodMapping = {
+        USD: 1,
+        EUR: 0.92,
+        GBP: 0.78,
+        JPY: 156.7
+      };
+
+      const convertCurrency = useMemo(() => {
+        const numericAmount = parseFloat(amount) || 0;
+        const baseInUSD = numericAmount / goodMapping[fromCurr];
+        const result = baseInUSD * goodMapping[toCurr];
+        return result.toFixed(2);
+      }, [amount, fromCurr, toCurr]);
+
+      const finalDisplay = `${convertCurrency} ${toCurr}`;
+
+      return (
+        <div id="container">
+          <h2>Currency Converter</h2>
+          <label>
+            Amount:
+            <input
+              type="number"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+            />
+          </label>
+
+          <label>
+            From:
+            <select value={fromCurr} onChange={(e) => setFromCurr(e.target.value)}>
+              <option value="USD">USD</option>
+              <option value="EUR">EUR</option>
+              <option value="GBP">GBP</option>
+              <option value="JPY">JPY</option>
+            </select>
+          </label>
+
+          <label>
+            To:
+            <select value={toCurr} onChange={(e) => setToCurr(e.target.value)}>
+              <option value="USD">USD</option>
+              <option value="EUR">EUR</option>
+              <option value="GBP">GBP</option>
+              <option value="JPY">JPY</option>
+            </select>
+          </label>
+
+          <p><strong>Converted:</strong> {finalDisplay}</p>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<CurrencyConverter />);
+  </script>
+</body>
+
+</html>

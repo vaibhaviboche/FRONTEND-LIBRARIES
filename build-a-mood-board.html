@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Mood Board</title>
+
+    <!-- React & Babel CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.26.3/babel.min.js"></script>
+
+    <!-- Styles -->
+    <style>
+      body {
+        background-color: #ffffcc;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      .mood-board-heading {
+        text-align: center;
+        font-size: 2.5em;
+        color: #333;
+        margin-top: 20px;
+      }
+
+      .mood-board {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        padding: 20px;
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .mood-board-item {
+        border-radius: 10px;
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        height: 250px;
+      }
+
+      .mood-board-image {
+        border-radius: 5px;
+        width: 180px;
+        height: 150px;
+        object-fit: cover;
+      }
+
+      .mood-board-text {
+        margin-top: 20px;
+        font-size: 1.2em;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="root"></div>
+
+    <!-- React Components & Render -->
+    <script type="text/babel" data-presets="react">
+      function MoodBoardItem({ color, image, description }) {
+        return (
+          <div className="mood-board-item" style={{ backgroundColor: color }}>
+            <img className="mood-board-image" src={image} alt="Mood" />
+            <h3 className="mood-board-text">{description}</h3>
+          </div>
+        );
+      }
+
+      function MoodBoard() {
+        return (
+          <div>
+            <h1 className="mood-board-heading">Destination Mood Board</h1>
+            <div className="mood-board">
+              <MoodBoardItem
+                color="#6a5acd"
+                image="https://cdn.freecodecamp.org/curriculum/labs/santorini.jpg"
+                description="Dreamy Santorini vibes"
+              />
+              <MoodBoardItem
+                color="#20b2aa"
+                image="https://cdn.freecodecamp.org/curriculum/labs/shore.jpg"
+                description="Peaceful shore escape"
+              />
+              <MoodBoardItem
+                color="#ff6347"
+                image="https://cdn.freecodecamp.org/curriculum/labs/ship.jpg"
+                description="Adventure on the open sea"
+              />
+            </div>
+          </div>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById('root')).render(<MoodBoard />);
+    </script>
+  </body>
+</html>

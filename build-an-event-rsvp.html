@@ -1,0 +1,214 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Event RSVP</title>
+
+    <!-- React + Babel -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.development.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.development.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.26.5/babel.min.js"></script>
+
+    <!-- CSS Styles -->
+    <style>
+      body {
+          font-family: Arial, sans-serif;
+          background-color: #f4f4f4;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-height: 100vh;
+          margin: 0;
+      }
+
+      .container {
+          background-color: #fff;
+          padding: 30px;
+          border-radius: 8px;
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+          width: 100%;
+          max-width: 500px;
+      }
+
+      h1 {
+          text-align: center;
+          color: #333;
+          margin-bottom: 25px;
+      }
+
+      .form-group, .label-container, .label-container2 {
+          margin-bottom: 15px;
+      }
+
+      label {
+          display: block;
+          margin-bottom: 5px;
+          font-weight: bold;
+          color: #555;
+      }
+
+      input[type="text"],
+      input[type="email"],
+      input[type="number"] {
+          width: calc(100% - 20px);
+          padding: 10px;
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          font-size: 16px;
+      }
+
+      .checkbox-group {
+          display: flex;
+          align-items: center;
+          margin-bottom: 20px;
+      }
+
+      .checkbox-group input[type="checkbox"] {
+          margin-right: 10px;
+          width: auto;
+      }
+
+      button {
+          background-color: #4CAF50;
+          color: white;
+          padding: 12px 20px;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+          font-size: 16px;
+          width: 100%;
+          transition: background-color 0.3s ease;
+      }
+
+      button:hover {
+          background-color: #45a049;
+      }
+
+      .confirmation-message {
+          margin-top: 25px;
+          padding: 15px;
+          background-color: #e6ffe6;
+          border: 1px solid #c6ffc6;
+          border-radius: 4px;
+          color: #333;
+      }
+
+      .confirmation-message p {
+          margin: 5px 0;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel" data-presets="react">
+      const { useState } = React;
+
+      function EventRSVPForm() {
+        const [name, setName] = useState('');
+        const [email, setEmail] = useState('');
+        const [attendees, setAttendees] = useState(1);
+        const [dietary, setDietary] = useState('');
+        const [bringingGuests, setBringingGuests] = useState(false);
+        const [submittedData, setSubmittedData] = useState(null);
+
+        const handleSubmit = (e) => {
+          e.preventDefault();
+
+          setSubmittedData({
+            name,
+            email,
+            attendees,
+            dietary,
+            bringingGuests,
+          });
+        };
+
+        return (
+          <div className="container">
+            <h1>Event RSVP Form</h1>
+            <form onSubmit={handleSubmit}>
+              <div className="label-container">
+                <label>
+                  Name:
+                  <input
+                    type="text"
+                    value={name}
+                    onChange={e => setName(e.target.value)}
+                    required
+                  />
+                </label>
+              </div>
+
+              <div className="label-container">
+                <label>
+                  Email:
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={e => setEmail(e.target.value)}
+                    required
+                  />
+                </label>
+              </div>
+
+              <div className="label-container">
+                <label>
+                  Number of Attendees:
+                  <input
+                    type="number"
+                    value={attendees}
+                    onChange={e => setAttendees(e.target.value)}
+                    required
+                  />
+                </label>
+              </div>
+
+              <div className="label-container">
+                <label>
+                  Dietary Preferences (optional):
+                  <input
+                    type="text"
+                    value={dietary}
+                    onChange={e => setDietary(e.target.value)}
+                  />
+                </label>
+              </div>
+
+              <div className="label-container2">
+                <label>
+                  Bringing additional guests?:
+                  <input
+                    type="checkbox"
+                    checked={bringingGuests}
+                    onChange={e => setBringingGuests(e.target.checked)}
+                  />
+                </label>
+              </div>
+
+              <div className="label-container2">
+                <button type="submit">Submit RSVP</button>
+              </div>
+            </form>
+
+            {submittedData && (
+              <div className="confirmation-message">
+                <h3>RSVP Submitted!</h3>
+                <p><strong>Name:</strong> {submittedData.name}</p>
+                <p><strong>Email:</strong> {submittedData.email}</p>
+                <p><strong>Number of attendees:</strong> {submittedData.attendees}</p>
+                <p><strong>Dietary preferences:</strong> {submittedData.dietary || 'None'}</p>
+                <p><strong>Bringing additional guests:</strong> {submittedData.bringingGuests ? 'Yes' : 'No'}</p>
+              </div>
+            )}
+          </div>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById('root')).render(
+        <EventRSVPForm />
+      );
+    </script>
+  </body>
+</html>

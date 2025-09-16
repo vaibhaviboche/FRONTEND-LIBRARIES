@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Tic-Tac-Toe</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.development.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.development.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.26.5/babel.min.js"></script>
+  <style>
+    .square {
+      height: 40px;
+      width: 40px;
+      background-color: white;
+      font-size: 24px;
+      text-align: center;
+      vertical-align: middle;
+    }
+    .square-container {
+      display: grid;
+      grid-template-columns: repeat(3, 40px);
+      gap: 5px;
+      margin: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel" data-presets="react">
+    const { useState } = React;
+
+    function Board() {
+      const initialGrid = Array(9).fill("");
+      const [grid, setGrid] = useState(initialGrid);
+      const [turn, setTurn] = useState("X");
+      const [gameOver, setGameOver] = useState(false);
+      const [message, setMessage] = useState("Next player: X");
+      const [winner, setWinner] = useState("");
+
+      const winningCombinations = [
+        [0, 1, 2], [3, 4, 5], [6, 7, 8],
+        [0, 3, 6], [1, 4, 7], [2, 5, 8],
+        [0, 4, 8], [2, 4, 6]
+      ];
+
+      const updateGrid = (square) => {
+        if (gameOver || grid[square] !== "") return;
+
+        const newGrid = grid.map((v, i) => (i === square ? turn : v));
+        const nextTurn = turn === "X" ? "O" : "X";
+
+        const checkWinner = () => {
+          for (const combo of winningCombinations) {
+            const [a, b, c] = combo;
+            if (newGrid[a] && newGrid[a] === newGrid[b] && newGrid[a] === newGrid[c]) {
+              return newGrid[a];
+            }
+          }
+          return null;
+        };
+
+        const win = checkWinner();
+        if (win) {
+          setGrid(newGrid);
+          setWinner(win);
+          setMessage(`Winner: ${win}`);
+          setGameOver(true);
+        } else if (newGrid.every(v => v !== "")) {
+          setGrid(newGrid);
+          setMessage("It's a Draw!");
+          setGameOver(true);
+        } else {
+          setGrid(newGrid);
+          setTurn(nextTurn);
+          setMessage(`Next player: ${nextTurn}`);
+        }
+      };
+
+      const reset = () => {
+        setGrid(initialGrid);
+        setTurn("X");
+        setGameOver(false);
+        setWinner("");
+        setMessage("Next player: X");
+      };
+
+      const createGrid = () =>
+        grid.map((v, i) => (
+          <button className="square" key={i} onClick={() => updateGrid(i)}>
+            {v}
+          </button>
+        ));
+
+      return (
+        <>
+          <h1>Tic-tac-toe</h1>
+          <div className="status">{message}</div>
+          <div className="square-container">{createGrid()}</div>
+          <button id="reset" onClick={reset}>Reset</button>
+        </>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<Board />);
+  </script>
+</body>
+
+</html>

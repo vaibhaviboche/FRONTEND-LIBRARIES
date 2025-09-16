@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Reusable Footer Component</title>
+
+    <!-- React & Babel CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.26.3/babel.min.js"></script>
+
+    <!-- Styles -->
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f4f4;
+        color: #333;
+      }
+
+      footer {
+        background-color: #222;
+        color: #eee;
+        padding: 40px 20px;
+        text-align: center;
+      }
+
+      .footer-content {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        gap: 30px;
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+
+      footer ul {
+        list-style: none;
+      }
+
+      footer ul li {
+        margin: 8px 0;
+      }
+
+      footer p {
+        margin-top: 30px;
+        font-size: 0.9rem;
+        color: #aaa;
+      }
+
+      .footer-links {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 20px;
+      }
+
+      .footer-links a {
+        text-decoration: none;
+        color: #eee;
+        font-size: 1rem;
+        transition: color 0.3s ease;
+      }
+
+      .footer-links a:hover {
+        color: #ffcc00;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="root"></div>
+
+    <!-- React Component & Render -->
+    <script type="text/babel" data-presets="react">
+      function Footer() {
+        return (
+          <footer>
+            <div className="footer-content">
+              <ul>
+                <li>About Us</li>
+                <li>Careers</li>
+              </ul>
+              <ul>
+                <li>Support</li>
+                <li>FAQs</li>
+              </ul>
+              <ul>
+                <li>Blog</li>
+                <li>Press</li>
+              </ul>
+
+              <p>&copy; 2025 Vaibhavi Inc. All rights reserved.</p>
+
+              <div className="footer-links">
+                <a href="#">🌐 Website</a>
+                <a href="#">📧 Email</a>
+                <a href="#">📞 Contact</a>
+              </div>
+            </div>
+          </footer>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById('root')).render(<Footer />);
+    </script>
+  </body>
+</html>

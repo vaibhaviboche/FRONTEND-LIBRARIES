@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Reusable Navbar</title>
+
+    <!-- React and Babel CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.26.3/babel.min.js"></script>
+
+    <!-- Styles -->
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --white: #fff;
+        --light-grey: #e1e0e0;
+        --dark-purple: #7c0e7c;
+        --black: #000;
+      }
+
+      body {
+        background-color: var(--light-grey);
+        font-family: Arial, sans-serif;
+      }
+
+      .navbar {
+        background-color: var(--white);
+        padding: 10px 0;
+      }
+
+      .navbar ul {
+        display: flex;
+        justify-content: space-around;
+        position: relative;
+      }
+
+      .navbar ul li {
+        list-style: none;
+        border-radius: 4px;
+        position: relative;
+      }
+
+      .navbar ul li a {
+        text-decoration: none;
+        color: var(--black);
+        padding: 10px;
+        display: inline-block;
+        width: 100%;
+      }
+
+      button {
+        background: transparent;
+        border: none;
+        font-family: 'Times New Roman', Times, serif;
+        padding: 10px;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+
+      .navbar ul .nav-item a:hover,
+      button:hover {
+        background-color: var(--dark-purple);
+        color: var(--white);
+      }
+
+      .navbar ul .nav-item .sub-menu {
+        visibility: hidden;
+        opacity: 0;
+        position: absolute;
+        right: 5%;
+        transition: opacity 0.5s ease;
+        display: block;
+        background-color: var(--white);
+        padding: 10px;
+        border-radius: 4px;
+        z-index: 1;
+      }
+
+      .navbar ul .nav-item:hover .sub-menu,
+      .navbar ul .nav-item:focus-within .sub-menu {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      @media (min-width: 768px) {
+        .navbar ul .nav-item .sub-menu {
+          right: 15%;
+        }
+      }
+
+      @media (min-width: 1024px) {
+        .navbar ul .nav-item .sub-menu {
+          right: 13%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <!-- React Component and Render -->
+    <script type="text/babel" data-presets="react">
+      function Navbar() {
+        return (
+          <nav className="navbar">
+            <ul>
+              <li className="nav-item">
+                <a href="#">Dashboard</a>
+              </li>
+              <li className="nav-item">
+                <a href="#">Widgets</a>
+              </li>
+              <li className="nav-item">
+                <button aria-expanded="false">Apps</button>
+                <ul className="sub-menu" aria-label="Apps">
+                  <li><a href="#">Calendar</a></li>
+                  <li><a href="#">Chat</a></li>
+                  <li><a href="#">Email</a></li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+        );
+      }
+
+      ReactDOM.createRoot(document.getElementById('root')).render(<Navbar />);
+    </script>
+  </body>
+</html>
